@@ -130,7 +130,7 @@ export const addAdmin = async (req, res) => {
 
     var username = components.join("");
     let hashedPassword;
-    const newDob = dob.split("-").reverse().join("-");
+    const newDob = dob.split("-").reverse().join("");
 
     hashedPassword = await bcrypt.hash(newDob, 10);
     var passwordUpdated = false;
@@ -159,10 +159,10 @@ export const addAdmin = async (req, res) => {
   }
 };
 export const addDummyAdmin = async () => {
-  const email = "dummy@gmail.com";
+  const email = "admin@gmail.com";
   const password = "123";
-  const name = "dummy";
-  const username = "ADMDUMMY";
+  const name = "Admin";
+  const username = "admin";
   let hashedPassword;
   hashedPassword = await bcrypt.hash(password, 10);
   var passwordUpdated = true;
@@ -177,9 +177,9 @@ export const addDummyAdmin = async () => {
       username,
       passwordUpdated,
     });
-    console.log("Dummy user added.");
+    console.log("First Admin added.");
   } else {
-    console.log("Dummy user already exists.");
+    console.log("First Admin is already exists.");
   }
 };
 
@@ -281,11 +281,11 @@ export const addFaculty = async (req, res) => {
       helper = faculties.length.toString();
     }
     var date = new Date();
-    var components = ["FAC", date.getFullYear(), departmentHelper, helper];
+    var components = ["F", date.getFullYear(), departmentHelper, helper];
 
     var username = components.join("");
     let hashedPassword;
-    const newDob = dob.split("-").reverse().join("-");
+    const newDob = dob.split("-").reverse().join("");
 
     hashedPassword = await bcrypt.hash(newDob, 10);
     var passwordUpdated = false;
@@ -543,11 +543,11 @@ export const addStudent = async (req, res) => {
       helper = students.length.toString();
     }
     var date = new Date();
-    var components = ["STU", date.getFullYear(), departmentHelper, helper];
+    var components = ["S", date.getFullYear(), departmentHelper, helper];
 
     var username = components.join("");
     let hashedPassword;
-    const newDob = dob.split("-").reverse().join("-");
+    const newDob = dob.split("-").reverse().join("");
 
     hashedPassword = await bcrypt.hash(newDob, 10);
     var passwordUpdated = false;

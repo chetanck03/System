@@ -20,7 +20,7 @@ app.use("/api/student", studentRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.get("/", (req, res) => {
-  res.send("Hello to college erp API");
+  res.send("Hello  API");
 });
 mongoose
   .connect(process.env.CONNECTION, {
