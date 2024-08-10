@@ -1,49 +1,74 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+const images = [
+  "https://i1.wp.com/www.icareermaker.com/wp-content/uploads/2016/12/GNDEC_Ludhiana.jpg",
+  "https://images.static-collegedunia.com/public/college_data/images/appImage/13655_GNDEC_APP.jpg?tr=c-force",
+  "https://architecture.gndec.ac.in/educational/images/gndec.jpg",
+];
+
 const Login = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000); // Change image every 2 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+    );
+  };
+
   return (
-    <div
-      className="h-screen w-screen backdrop-blur-md flex justify-center items-center"
-      style={{
-        backgroundImage: `url("https://i1.wp.com/www.icareermaker.com/wp-content/uploads/2016/12/GNDEC_Ludhiana.jpg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}>
-      <div className="flex flex-col items-center mt-10 space-y-8 sm:space-y-32 px-4 sm:px-0">
-        <h1 className="text-3xl sm:text-4xl font-semibold bg-black text-white w-full text-center py-4 bg-opacity-75 rounded-2xl">
-          GNE Ludhiana
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-28">
-          <div className="h-72 w-full sm:h-96 sm:w-80 space-y-6 sm:space-y-11 shadow-2xl flex flex-col justify-center items-center bg-transparent backdrop-blur-md bg-[#cebe30] bg-opacity-60 rounded-xl">
-            <h1 className="text-2xl sm:text-4xl font-extrabold">Admin</h1>
-            <Link
-              type="button"
-              to="/login/adminlogin"
-              className="flex items-center justify-center bg-blue-500 h-10 w-24 sm:w-32 text-lg rounded-lg text-white hover:scale-110 transition-all duration-200">
-              Login
-            </Link>
-          </div>
-          <div className="h-72 w-full sm:h-96 sm:w-80 space-y-6 sm:space-y-11 shadow-2xl flex flex-col justify-center items-center bg-transparent backdrop-blur-md bg-[#5a51d6] bg-opacity-60 rounded-xl">
-            <h1 className="text-2xl sm:text-4xl font-extrabold">Faculty</h1>
-            <Link
-              type="button"
-              to="/login/facultylogin"
-              className="flex items-center justify-center bg-blue-500 h-10 w-24 sm:w-32 text-lg rounded-lg text-white hover:scale-110 transition-all duration-200">
-              Login
-            </Link>
-          </div>
-          <div className="h-72 w-full sm:h-96 sm:w-80 space-y-6 sm:space-y-11 shadow-2xl flex flex-col justify-center items-center bg-transparent backdrop-blur-md bg-[#d65158] bg-opacity-60 rounded-xl">
-            <h1 className="text-2xl sm:text-4xl font-extrabold">Student</h1>
-            <Link
-              type="button"
-              to="/login/studentlogin"
-              className="flex items-center justify-center bg-blue-500 h-10 w-24 sm:w-32 text-lg rounded-lg text-white hover:scale-110 transition-all duration-200">
-              Login
-            </Link>
-          </div>
+    <div className="h-screen w-screen flex flex-col">
+      <header className="flex justify-between items-center p-4 bg-gray-300 bg-opacity-75">
+        <div className="flex items-center space-x-4">
+          <img src="./gndec.png" alt="GNDEC Logo" className="h-12" />
+          <span className="text-lg font-semibold">
+            Guru Nanak Dev Engineering College
+          </span>
         </div>
+        <nav className="flex space-x-4">
+          {["Admin", "Faculty", "Student"].map((role) => (
+            <Link
+              key={role}
+              to={`/login/${role.toLowerCase()}login`}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg transform hover:scale-105 transition-transform duration-200"
+            >
+              {role} Login
+            </Link>
+          ))}
+        </nav>
+      </header>
+
+      <div className="relative flex-grow">
+        <div
+          className="h-full w-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${images[currentIndex]})` }}
+        ></div>
+
+        <button
+          onClick={handlePrev}
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2"
+        >
+          &#10094;
+        </button>
+
+        <button
+          onClick={handleNext}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2"
+        >
+          &#10095;
+        </button>
       </div>
     </div>
   );

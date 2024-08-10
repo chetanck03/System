@@ -5,6 +5,8 @@ import { adminSignIn } from "../../../redux/actions/adminActions";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Spinner from "../../../utils/Spinner";
+import { Link } from "react-router-dom";
+
 
 const AdminLogin = () => {
   const [translate, setTranslate] = useState(false);
@@ -42,6 +44,26 @@ const AdminLogin = () => {
     }
   }, [store.errors]);
   return (
+    <>
+       <header className="flex justify-between items-center p-4 bg-gray-300 bg-opacity-75">
+        <div className="flex items-center space-x-4">
+          <img src="../gndec.png" alt="GNDEC Logo" className="h-12" />
+          <span className="text-lg font-semibold">
+            Guru Nanak Dev Engineering College
+          </span>
+        </div>
+        <nav className="flex space-x-4">
+          {["Admin", "Faculty", "Student"].map((role) => (
+            <Link
+              key={role}
+              to={`/login/${role.toLowerCase()}login`}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg transform hover:scale-105 transition-transform duration-200"
+            >
+              {role} Login
+            </Link>
+          ))}
+        </nav>
+      </header>
     <div className="bg-[#04bd7d] h-screen w-screen flex items-center justify-center">
       <div className="grid grid-cols-2">
         <div
@@ -121,6 +143,7 @@ const AdminLogin = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
